@@ -1,7 +1,10 @@
-# articlep
+package articlep
 
-## ArticleProvider 模块接口
-```
+import (
+	"github.com/provider-go/articlep/defaultarticlep"
+	"gorm.io/gorm"
+)
+
 type ArticleProvider interface {
 	// SetDB 设置数据库连接
 	SetDB(db *gorm.DB)
@@ -28,30 +31,12 @@ type ArticleProvider interface {
 	// ViewSingle 查看单页文章详情
 	ViewSingle(id string) (string, error)
 }
-```
 
-## ArticleProvider 使用示例
-```
-package main
-
-import (
-	"fmt"
-	"github.com/provider-go/articlep"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-)
-
-func main() {
-	DBConn, err := gorm.Open(mysql.Open("root:pawword@tcp(ip:3306)/db?charset=utf8"), &gorm.Config{})
-	if err != nil {
-		fmt.Println(err)
+// GetArticleProvider 获取用户模块供应商
+func GetArticleProvider(name string) ArticleProvider {
+	if name == "default" {
+		return defaultarticlep.NewDefaultArticleProvider()
 	}
-	provider := articlep.GetAticleProvider("default")
-	provider.SetDB(DBConn)
-	res, err := provider.View("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(res)
+
+	return nil
 }
-```
