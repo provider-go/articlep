@@ -46,9 +46,9 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	provider := articlep.GetAticleProvider("default")
+	provider := articlep.GetArticleProvider("default")
 	provider.SetDB(DBConn)
-	res, err := provider.View("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+	res, err := provider.ViewContent("11111111112222222222333333333344")
 	if err != nil {
 		fmt.Println(err)
 	}
